@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Optionally install torch during build (keep default OFF to reduce image size)
-ARG INSTALL_TORCH=0
+ARG INSTALL_TORCH=1
 
 COPY requirements.txt /app/requirements.txt
 
