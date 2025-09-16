@@ -3,6 +3,7 @@ tokenizers
 transformers
 streamlit>=1.26.0
 streamlit-chat
+accelerate
 # torch omitted by default to keep install light.
 # Install torch separately (CPU or GPU) if needed:
 #  - CPU build: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
