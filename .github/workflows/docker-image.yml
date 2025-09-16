@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image CI with ngrok for Streamlit
 
 on:
   push:
@@ -7,19 +7,34 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
+  build-and-expose:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-    - name: Build the Docker image
+    - name: Set image tag
+      run: echo "IMAGE_TAG=chatbot:$(date +%s)" >> $GITHUB_ENV
+
+    - name: Build Docker image
+      run: docker build . --file Dockerfile --tag ${{ env.IMAGE_TAG }}
+
+    - name: Run Docker container
+      run: docker run -d -p 8501:8501 --name chatbot ${{ env.IMAGE_TAG }}
+
+    - name: Install ngrok
       run: |
-        IMAGE_TAG=chatbot:$(date +%s)
-        echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
-        docker build . --file Dockerfile --tag $IMAGE_TAG
+        curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
+        echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
+        sudo apt update && sudo apt install ngrok
 
-    - name: Run the Docker container
-      run: docker run ${{ env.IMAGE_TAG }}
+    - name: Start ngrok tunnel to Streamlit
+      env:
+        NGROK_AUTHTOKEN: ${{ secrets.NGROK_AUTHTOKEN }}
+      run: |
+        ngrok config add-authtoken $NGROK_AUTHTOKEN
+        nohup ngrok http 8501 > ngrok.log &
+        sleep 5
+        echo "🔗 Public URL:"
+        curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url'
