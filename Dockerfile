@@ -6,7 +6,7 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     STREAMLIT_SERVER_PORT=8501 \
-    MODEL=Qwen/Qwen3-0.6B
+    MODEL=trl-internal-testing/tiny-Qwen2ForCausalLM-2.5
 
 WORKDIR /app
 
