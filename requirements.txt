@@ -1,6 +1,6 @@
 python-dotenv
 tokenizers
-transformers>=4.35.0
+transformers
 streamlit>=1.26.0
 streamlit-chat
 # torch omitted by default to keep install light.
