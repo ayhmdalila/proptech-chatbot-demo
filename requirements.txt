@@ -1,6 +1,9 @@
 python-dotenv
 tokenizers
-transformers
-streamlit
-tensorflow
-torch
+transformers>=4.35.0
+streamlit>=1.26.0
+streamlit-chat
+# torch omitted by default to keep install light.
+# Install torch separately (CPU or GPU) if needed:
+#  - CPU build: pip install --extra-index-url https://download.pytorch.org/whl/cpu torch
+#  - GPU build: follow PyTorch instructions for your CUDA version
