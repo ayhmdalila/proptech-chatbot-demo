@@ -2,6 +2,8 @@
 
 Lightweight Streamlit demo that loads a causal LLM via Hugging Face Transformers and serves a simple chat UI for PropTech use cases.
 
+![ui](https://github.com/ayhmdalila/proptech-chatbot-demo/blob/main/ui.gif)
+
 ## Quick facts
 - Frameworks: Streamlit frontend, Transformers for model loading, optional FastAPI endpoint.
 - Expectation: MODEL environment variable points to a Hugging Face model ID (or path).
