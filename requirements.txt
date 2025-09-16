@@ -1,0 +1,6 @@
+python-dotenv
+tokenizers
+transformers
+streamlit
+tensorflow
+torch
